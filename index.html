@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="af">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baai Rus Self-Catering · Weskus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --cream:      #f8f3eb;
+      --sand:       #e8dcc8;
+      --warm-white: #fdfaf5;
+      --ocean:      #1e3d4f;
+      --ocean-mid:  #2e5a70;
+      --gold:       #c8a060;
+      --terracotta: #c87848;
+      --text:       #2a1e10;
+      --text-soft:  #7a6a58;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--warm-white);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(253,250,245,0.96);
+      padding: 14px 40px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      backdrop-filter: blur(8px);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.5px;
+      transition: color 0.4s;
+      text-decoration: none;
+    }
+    nav.scrolled .nav-logo { color: var(--ocean); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none; font-weight: 400;
+      transition: color 0.3s;
+    }
+    nav.scrolled .nav-links a { color: var(--text-soft); }
+    .nav-links a:hover { color: var(--gold) !important; }
+    .nav-book {
+      background: var(--terracotta); color: #fff !important;
+      padding: 9px 22px; border-radius: 30px;
+      font-size: 12px !important; letter-spacing: 1px;
+      transition: background 0.3s, transform 0.2s !important;
+    }
+    .nav-book:hover { background: #a85e30 !important; transform: translateY(-1px); }
+    @media (max-width: 680px) {
+      nav { padding: 16px 20px; }
+      nav.scrolled { padding: 12px 20px; }
+      .nav-links { display: none; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      height: 100vh; min-height: 600px;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-img {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1800&q=85') center/cover no-repeat;
+      transform: scale(1.05);
+      animation: heroZoom 8s ease-out forwards;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.05); }
+      to   { transform: scale(1.0); }
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(20,40,55,0.62) 0%, rgba(10,25,35,0.45) 60%, rgba(30,61,79,0.3) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; color: #fff;
+      padding: 0 24px;
+      animation: fadeUp 1.2s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 18px;
+      animation: fadeUp 1.2s 0.2s ease both;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(52px, 9vw, 96px);
+      font-weight: 300; line-height: 1.0;
+      margin-bottom: 20px;
+      animation: fadeUp 1.2s 0.35s ease both;
+    }
+    .hero-title em { font-style: italic; color: rgba(255,255,255,0.75); }
+    .hero-tagline {
+      font-size: 16px; font-weight: 300;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 0.5px; margin-bottom: 44px;
+      animation: fadeUp 1.2s 0.5s ease both;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #25D366; color: #fff;
+      padding: 16px 36px; border-radius: 50px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px; font-weight: 500; letter-spacing: 1px;
+      text-decoration: none; text-transform: uppercase;
+      box-shadow: 0 8px 32px rgba(37,211,102,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: fadeUp 1.2s 0.65s ease both;
+    }
+    .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(37,211,102,0.4); }
+    .hero-cta svg { width: 20px; height: 20px; fill: #fff; }
+    .hero-scroll {
+      position: absolute; bottom: 36px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.5); font-size: 11px; letter-spacing: 2px;
+      text-transform: uppercase; animation: bounce 2.5s infinite 2s;
+    }
+    .hero-scroll::after {
+      content: ''; display: block;
+      width: 1px; height: 40px;
+      background: rgba(255,255,255,0.3);
+      animation: lineGrow 2.5s infinite 2s;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+    @keyframes lineGrow {
+      0%,100% { opacity: 0.3; } 50% { opacity: 0.8; }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 90px 0; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+    .section-label {
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(36px, 5vw, 54px);
+      font-weight: 300; line-height: 1.1;
+      color: var(--ocean);
+    }
+    .section-title em { font-style: italic; }
+
+    /* ── ABOUT ── */
+    .about { background: var(--cream); }
+    .about-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px;
+      align-items: center;
+    }
+    @media (max-width: 760px) { .about-inner { grid-template-columns: 1fr; gap: 40px; } }
+    .about-text p {
+      font-size: 16px; line-height: 1.85; color: var(--text-soft);
+      margin-top: 24px;
+    }
+    .about-text p + p { margin-top: 14px; }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img {
+      width: 100%; aspect-ratio: 4/5; object-fit: cover;
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    .about-badge {
+      position: absolute; bottom: -20px; right: -20px;
+      background: var(--ocean); color: #fff;
+      width: 120px; height: 120px; border-radius: 50%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      font-family: 'Cormorant Garant', serif;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    .about-badge span:first-child { font-size: 32px; font-weight: 600; line-height: 1; }
+    .about-badge span:last-child { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.7; margin-top: 2px; }
+    @media (max-width: 760px) { .about-badge { right: 0; bottom: -16px; width: 90px; height: 90px; } .about-badge span:first-child { font-size: 24px; } }
+
+    /* ── UNITS ── */
+    .units { background: var(--warm-white); }
+    .units-header { text-align: center; margin-bottom: 56px; }
+    .units-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    @media (max-width: 720px) { .units-grid { grid-template-columns: 1fr; } }
+    .unit-card {
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+      background: #fff;
+    }
+    .unit-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.14);
+    }
+    .unit-img {
+      width: 100%; height: 240px; object-fit: cover;
+      display: block;
+    }
+    .unit-body { padding: 28px; }
+    .unit-name {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 26px; font-weight: 600; color: var(--ocean);
+      margin-bottom: 8px;
+    }
+    .unit-desc {
+      font-size: 14px; line-height: 1.7; color: var(--text-soft);
+      margin-bottom: 20px;
+    }
+    .unit-features {
+      list-style: none; display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 24px;
+    }
+    .unit-features li {
+      font-size: 12px; padding: 5px 12px;
+      background: var(--cream); color: var(--ocean-mid);
+      border-radius: 20px; font-weight: 400;
+    }
+    .unit-price-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 20px; border-top: 1px solid var(--sand);
+    }
+    .unit-price {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 28px; font-weight: 600; color: var(--ocean);
+    }
+    .unit-price span { font-size: 14px; font-family: 'Jost', sans-serif; font-weight: 300; color: var(--text-soft); }
+    .unit-btn {
+      background: #25D366; color: #fff;
+      padding: 10px 22px; border-radius: 30px;
+      font-size: 13px; font-weight: 500; letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .unit-btn:hover { background: #1da853; transform: translateY(-2px); }
+    .unit-btn svg { width: 16px; height: 16px; fill: #fff; }
+
+    /* ── AMENITIES ── */
+    .amenities { background: var(--ocean); }
+    .amenities .section-label { color: rgba(200,160,96,0.8); }
+    .amenities .section-title { color: #fff; }
+    .amenities-header { margin-bottom: 56px; }
+    .amenities-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 20px;
+    }
+    .amenity {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px; padding: 28px 20px;
+      text-align: center;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .amenity:hover { background: rgba(255,255,255,0.12); transform: translateY(-4px); }
+    .amenity-icon { font-size: 32px; margin-bottom: 12px; }
+    .amenity-label {
+      font-size: 13px; color: rgba(255,255,255,0.75);
+      letter-spacing: 0.5px; line-height: 1.4;
+    }
+
+    /* ── GALLERY ── */
+    .gallery { background: var(--cream); padding-bottom: 0; }
+    .gallery-header { margin-bottom: 48px; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 240px 240px;
+      gap: 8px;
+    }
+    @media (max-width: 640px) {
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 160px 160px 160px;
+      }
+      .gallery-big { grid-column: span 1 !important; grid-row: span 1 !important; }
+    }
+    .gallery-big { grid-column: span 2; grid-row: span 2; }
+    .gallery-item {
+      overflow: hidden; border-radius: 4px;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+
+    /* ── LOCATION ── */
+    .location { background: var(--warm-white); }
+    .location-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px;
+      align-items: center;
+    }
+    @media (max-width: 760px) { .location-inner { grid-template-columns: 1fr; gap: 40px; } }
+    .location-text p { font-size: 16px; line-height: 1.8; color: var(--text-soft); margin-top: 24px; }
+    .location-features { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+    .location-feat {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 14px; color: var(--text-soft);
+    }
+    .location-feat-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+    }
+    .map-placeholder {
+      aspect-ratio: 4/3; border-radius: 16px;
+      background: linear-gradient(135deg, #c8e0e8, #a0c0cc);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 14px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      overflow: hidden; position: relative;
+    }
+    .map-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80') center/cover;
+      opacity: 0.35;
+    }
+    .map-pin {
+      position: relative; z-index: 1;
+      font-size: 48px;
+    }
+    .map-label {
+      position: relative; z-index: 1;
+      font-family: 'Cormorant Garant', serif;
+      font-size: 20px; color: var(--ocean);
+      font-weight: 600;
+    }
+    .map-link {
+      position: relative; z-index: 1;
+      background: var(--ocean); color: #fff;
+      padding: 10px 24px; border-radius: 30px;
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: background 0.2s;
+    }
+    .map-link:hover { background: var(--ocean-mid); }
+
+    /* ── BOOK ── */
+    .book {
+      background: linear-gradient(135deg, #1a3040, #2e5a70);
+      text-align: center; padding: 100px 32px;
+      position: relative; overflow: hidden;
+    }
+    .book::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1800&q=75') center/cover;
+      opacity: 0.12;
+    }
+    .book-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+    .book .section-label { color: var(--gold); }
+    .book .section-title { color: #fff; margin-bottom: 20px; }
+    .book-sub { font-size: 16px; color: rgba(255,255,255,0.65); margin-bottom: 44px; line-height: 1.7; }
+    .book-cta {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: #25D366; color: #fff;
+      padding: 18px 44px; border-radius: 50px;
+      font-size: 15px; font-weight: 500; letter-spacing: 0.5px;
+      text-decoration: none;
+      box-shadow: 0 10px 40px rgba(37,211,102,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .book-cta:hover { transform: translateY(-4px); box-shadow: 0 18px 50px rgba(37,211,102,0.5); }
+    .book-cta svg { width: 22px; height: 22px; fill: #fff; }
+    .book-note { margin-top: 20px; font-size: 13px; color: rgba(255,255,255,0.4); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #111820;
+      color: rgba(255,255,255,0.45);
+      padding: 40px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+      font-size: 13px;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 20px; color: rgba(255,255,255,0.7);
+      font-weight: 600;
+    }
+    .footer-credit { font-size: 12px; }
+    .footer-credit a { color: var(--gold); text-decoration: none; }
+    .footer-credit a:hover { text-decoration: underline; }
+
+    /* ── FLOATING WA ── */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 200;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+      text-decoration: none;
+      animation: pulse 2.5s infinite 3s;
+      transition: transform 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); animation: none; }
+    .wa-float svg { width: 30px; height: 30px; fill: #fff; }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 6px 24px rgba(37,211,102,0.45); }
+      50% { box-shadow: 0 6px 40px rgba(37,211,102,0.7), 0 0 0 10px rgba(37,211,102,0.1); }
+    }
+
+    /* ── FADE-IN ON SCROLL ── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a class="nav-logo" href="#">Baai Rus</a>
+    <ul class="nav-links">
+      <li><a href="#about">Oor Ons</a></li>
+      <li><a href="#units">Verblyf</a></li>
+      <li><a href="#gallery">Galery</a></li>
+      <li><a href="#book" class="nav-book">Bespreek</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-img"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Weskus · Suid-Afrika</p>
+      <h1 class="hero-title">Baai Rus<br><em>Self-Catering</em></h1>
+      <p class="hero-tagline">Rus aan die rand van die see.</p>
+      <a href="https://wa.me/27738399334?text=Goeie+dag!+Ek+wil+graag+meer+weet+oor+Baai+Rus+Self-Catering." class="hero-cta" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Bespreking
+      </a>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-inner">
+        <div class="about-text reveal">
+          <p class="section-label">Oor Ons</p>
+          <h2 class="section-title">Jou <em>tuiste</em><br>aan die see</h2>
+          <p>Welkom by Baai Rus — 'n rustige self-catering verblyf nestled langs die kalm waters van die Weskus. Hier waar die lug skoon is, die see naby, en die stilte jou welkom heet.</p>
+          <p>Ons bied 'n tuis-weg-van-die-huis ervaring, perfek vir gesinne, paartjies, en enigeen wat wil ontvlug van die daagliks gehaasd van die stad.</p>
+        </div>
+        <div class="about-img-wrap reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80" alt="Baai Rus buitekant" class="about-img" />
+          <div class="about-badge">
+            <span>4</span>
+            <span>Gaste</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UNITS -->
+  <section class="units" id="units">
+    <div class="container">
+      <div class="units-header reveal">
+        <p class="section-label">Verblyf Opsies</p>
+        <h2 class="section-title">Kies jou <em>ruimte</em></h2>
+      </div>
+      <div class="units-grid">
+        <div class="unit-card reveal reveal-delay-1">
+          <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80" alt="Die Strandhuis" class="unit-img" />
+          <div class="unit-body">
+            <h3 class="unit-name">Die Strandhuis</h3>
+            <p class="unit-desc">Ons hoofverblyf met volle uitsig op die see. Ruim, helder en volledig gemeubileerd vir 'n onvergeetlike verblyf.</p>
+            <ul class="unit-features">
+              <li>2 Slaapkamers</li>
+              <li>Slaap 4</li>
+              <li>Volwaardige Kombuis</li>
+              <li>Seeuitsig</li>
+              <li>Braai Area</li>
+            </ul>
+            <div class="unit-price-row">
+              <div class="unit-price">R750 <span>/ nag</span></div>
+              <a href="https://wa.me/27738399334?text=Hallo!+Ek+wil+Die+Strandhuis+bespreek." class="unit-btn" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Bespreek
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="unit-card reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1505693314120-0d443867891c?w=800&q=80" alt="Die Vissershuisie" class="unit-img" />
+          <div class="unit-body">
+            <h3 class="unit-name">Die Vissershuisie</h3>
+            <p class="unit-desc">Knus en gesellig — ideaal vir 'n romantiese wegbreek of 'n stil rusplaas. Warm, eenvoudig, en vol karakter.</p>
+            <ul class="unit-features">
+              <li>1 Slaapkamer</li>
+              <li>Slaap 2</li>
+              <li>Mini Kombuis</li>
+              <li>Tuinuitsig</li>
+              <li>Privaat Stoep</li>
+            </ul>
+            <div class="unit-price-row">
+              <div class="unit-price">R550 <span>/ nag</span></div>
+              <a href="https://wa.me/27738399334?text=Hallo!+Ek+wil+Die+Vissershuisie+bespreek." class="unit-btn" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Bespreek
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AMENITIES -->
+  <section class="amenities">
+    <div class="container">
+      <div class="amenities-header reveal">
+        <p class="section-label">Fasiliteite</p>
+        <h2 class="section-title" style="color:#fff;">Alles wat jy <em>nodig het</em></h2>
+      </div>
+      <div class="amenities-grid">
+        <div class="amenity reveal reveal-delay-1"><div class="amenity-icon">🌊</div><div class="amenity-label">Strandtoegang</div></div>
+        <div class="amenity reveal reveal-delay-1"><div class="amenity-icon">🔥</div><div class="amenity-label">Braai Area</div></div>
+        <div class="amenity reveal reveal-delay-2"><div class="amenity-icon">📶</div><div class="amenity-label">Gratis WiFi</div></div>
+        <div class="amenity reveal reveal-delay-2"><div class="amenity-icon">🍳</div><div class="amenity-label">Volwaardige Kombuis</div></div>
+        <div class="amenity reveal reveal-delay-3"><div class="amenity-icon">🚗</div><div class="amenity-label">Privaat Parkering</div></div>
+        <div class="amenity reveal reveal-delay-3"><div class="amenity-icon">🌅</div><div class="amenity-label">Seeuitsig</div></div>
+        <div class="amenity reveal reveal-delay-4"><div class="amenity-icon">🐟</div><div class="amenity-label">Visgeleentheid</div></div>
+        <div class="amenity reveal reveal-delay-4"><div class="amenity-icon">🧺</div><div class="amenity-label">Skoon Linne</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="container">
+      <div class="gallery-header reveal">
+        <p class="section-label">Galery</p>
+        <h2 class="section-title">Beleef <em>Baai Rus</em></h2>
+      </div>
+    </div>
+    <div class="gallery-grid" style="max-width:1100px;margin:0 auto;padding:0 32px;">
+      <div class="gallery-item gallery-big reveal">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1000&q=80" alt="Strand" />
+      </div>
+      <div class="gallery-item reveal reveal-delay-1">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Kombuis" />
+      </div>
+      <div class="gallery-item reveal reveal-delay-2">
+        <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=600&q=80" alt="Slaapkamer" />
+      </div>
+      <div class="gallery-item reveal reveal-delay-1">
+        <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=600&q=80" alt="Natuur" />
+      </div>
+      <div class="gallery-item reveal reveal-delay-3">
+        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt="Sitkamer" />
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location" id="location">
+    <div class="container">
+      <div class="location-inner">
+        <div class="location-text reveal">
+          <p class="section-label">Ligging</p>
+          <h2 class="section-title">Waar die <em>see jou roep</em></h2>
+          <p>Geleë op die pragtige Weskus van Suid-Afrika, net minute se stap van die strand af. Die area is bekend vir sy varsvis, rustige strate, en ongerepte natuur.</p>
+          <div class="location-features">
+            <div class="location-feat"><span class="location-feat-dot"></span>2 minute loop na die strand</div>
+            <div class="location-feat"><span class="location-feat-dot"></span>Naby plaaslike restaurante en winkels</div>
+            <div class="location-feat"><span class="location-feat-dot"></span>Visgeleenthede reg voor jou deur</div>
+            <div class="location-feat"><span class="location-feat-dot"></span>3 uur van Kaapstad</div>
+          </div>
+        </div>
+        <div class="map-placeholder reveal reveal-delay-2">
+          <div class="map-pin">📍</div>
+          <div class="map-label">Weskus, Suid-Afrika</div>
+          <a href="https://maps.google.com" target="_blank" class="map-link">Sien op Google Maps</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOK -->
+  <section class="book" id="book">
+    <div class="book-inner">
+      <p class="section-label">Bespreking</p>
+      <h2 class="section-title">Gereed om te <em>rus?</em></h2>
+      <p class="book-sub">Stuur ons 'n WhatsApp-boodskap en ons kom terug na jou binne 'n paar minute. Geen ingewikkelde vorms nie — net 'n eenvoudige gesprek.</p>
+      <a href="https://wa.me/27738399334?text=Goeie+dag!+Ek+wil+graag+by+Baai+Rus+bespreek.+Kan+julle+my+asseblief+help?" class="book-cta" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Bespreek via WhatsApp
+      </a>
+      <p class="book-note">Gewoonlik binne 30 minute 'n antwoord · Geen deposito benodig nie</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Baai Rus Self-Catering</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.3);">Weskus, Suid-Afrika</div>
+    <div class="footer-credit">Webtuiste deur <a href="#">Bernelee Simon</a></div>
+  </footer>
+
+  <!-- FLOATING WA BUTTON -->
+  <a href="https://wa.me/27738399334?text=Hallo+Baai+Rus!" class="wa-float" target="_blank" title="Bespreek via WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    // Sticky nav
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+<!-- ============================================================
+     Baai Rus AI Concierge — Chat Widget
+     Paste this entire block right before the closing </body> tag
+     on braairusselfcatering.netlify.app's index.html
+     ============================================================ -->
+<style>
+  #brc-bubble {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #1e3a4c;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    z-index: 9999;
+  }
+  #brc-window {
+    position: fixed;
+    bottom: 96px;
+    right: 22px;
+    width: 320px;
+    max-width: 90vw;
+    height: 440px;
+    max-height: 70vh;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 9999;
+    font-family: system-ui, sans-serif;
+  }
+  #brc-window.open { display: flex; }
+  #brc-header {
+    background: #1e3a4c;
+    color: #fff;
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  #brc-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    background: #f7f5f2;
+  }
+  .brc-msg {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    max-width: 85%;
+    font-size: 13.5px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+  }
+  .brc-msg.bot {
+    background: #eee;
+    color: #222;
+    margin-right: auto;
+  }
+  .brc-msg.user {
+    background: #1e3a4c;
+    color: #fff;
+    margin-left: auto;
+  }
+  #brc-input-row {
+    display: flex;
+    border-top: 1px solid #ddd;
+  }
+  #brc-input {
+    flex: 1;
+    border: none;
+    padding: 10px 12px;
+    font-size: 13.5px;
+    outline: none;
+  }
+  #brc-send {
+    border: none;
+    background: #1e3a4c;
+    color: #fff;
+    padding: 0 16px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+</style>
+
+<div id="brc-bubble" onclick="brcToggle()">💬</div>
+
+<div id="brc-window">
+  <div id="brc-header">Baai Rus — Ask us anything</div>
+  <div id="brc-messages"></div>
+  <div id="brc-input-row">
+    <input id="brc-input" type="text" placeholder="Type a message..." onkeydown="if(event.key==='Enter') brcSend()" />
+    <button id="brc-send" onclick="brcSend()">Send</button>
+  </div>
+</div>
+
+<script>
+  const BRC_ENDPOINT = "/.netlify/functions/concierge";
+  let brcHistory = [];
+
+  function brcToggle() {
+    const win = document.getElementById("brc-window");
+    win.classList.toggle("open");
+    if (win.classList.contains("open") && brcHistory.length === 0) {
+      brcAddMessage("bot", "Hi! 👋 Welkom by Baai Rus. Vra my enigiets oor Die Strandhuis of Die Vissershuisie — pryse, fasiliteite, of beskikbaarheid. / Ask me anything about our units, pricing, or availability.");
+    }
+  }
+
+  function brcAddMessage(role, text) {
+    const box = document.getElementById("brc-messages");
+    const div = document.createElement("div");
+    div.className = "brc-msg " + (role === "user" ? "user" : "bot");
+    div.textContent = text;
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  async function brcSend() {
+    const input = document.getElementById("brc-input");
+    const message = input.value.trim();
+    if (!message) return;
+    input.value = "";
+    brcAddMessage("user", message);
+    brcHistory.push({ role: "user", content: message });
+
+    brcAddMessage("bot", "...");
+    const box = document.getElementById("brc-messages");
+
+    try {
+      const res = await fetch(BRC_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message, history: brcHistory.slice(0, -1) }),
+      });
+      const data = await res.json();
+      box.removeChild(box.lastChild); // remove "..."
+      const reply = data.reply || "Jammer, iets het verkeerd geloop. Probeer weer. / Sorry, something went wrong. Please try again.";
+      brcAddMessage("bot", reply);
+      brcHistory.push({ role: "assistant", content: reply });
+    } catch (err) {
+      box.removeChild(box.lastChild);
+      brcAddMessage("bot", "Connection error — please try again in a moment.");
+    }
+  }
+</script>
+
+</body>
+</html>
