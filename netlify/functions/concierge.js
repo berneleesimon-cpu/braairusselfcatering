@@ -7,7 +7,7 @@
 // - Never auto-confirms a booking — always "pending owner confirmation"
 
 const GROQ_MODEL = "openai/gpt-oss-20b"; // Groq's recommended replacement for the deprecated llama-3.1-8b-instant
-const OWNER_EMAIL = "percipiodigital@gmail.com";
+const OWNER_EMAIL = "berneleesimon@gmail.com";
 const FROM_EMAIL = "onboarding@resend.dev"; // Resend's default sender until a custom domain is verified
 
 const blockedDates = require("./blocked-dates.json");
