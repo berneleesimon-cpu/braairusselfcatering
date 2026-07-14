@@ -643,7 +643,7 @@
   <footer>
     <div class="footer-logo">Baai Rus Self-Catering</div>
     <div style="font-size:12px;color:rgba(255,255,255,0.3);">Weskus, Suid-Afrika</div>
-    <div class="footer-credit">Webtuiste deur <a href="#">Bernelee Simon</a></div>
+    <div class="footer-credit">Webtuiste deur <a href="#">Percipio Digital</a></div>
   </footer>
 
   <!-- FLOATING WA BUTTON -->
@@ -678,7 +678,7 @@
 <style>
   #brc-bubble {
     position: fixed;
-    bottom: 22px;
+    bottom: 96px;
     right: 22px;
     width: 60px;
     height: 60px;
@@ -695,7 +695,7 @@
   }
   #brc-window {
     position: fixed;
-    bottom: 96px;
+    bottom: 170px;
     right: 22px;
     width: 320px;
     max-width: 90vw;
@@ -767,7 +767,7 @@
 <div id="brc-bubble" onclick="brcToggle()">💬</div>
 
 <div id="brc-window">
-  <div id="brc-header">Baai Rus — Ask us anything</div>
+  <div id="brc-header" style="display:flex;justify-content:space-between;align-items:center;">Baai Rus — Ask us anything<span onclick="brcToggle()" style="cursor:pointer;font-size:18px;">✕</span></div>
   <div id="brc-messages"></div>
   <div id="brc-input-row">
     <input id="brc-input" type="text" placeholder="Type a message..." onkeydown="if(event.key==='Enter') brcSend()" />
