@@ -815,7 +815,8 @@
     } catch (err) {
       console.error("Baai Rus concierge error:", err);
       box.removeChild(box.lastChild);
-      brcAddMessage("bot", "Connection error — please try again in a moment.");
+      // TEMP DEBUG — remove this line once the intermittent failure is diagnosed.
+      brcAddMessage("bot", "Connection error — please try again in a moment.\n\n[DEBUG] " + (err && err.message ? err.message : String(err)));
     }
   }
 
@@ -834,7 +835,7 @@
         if (!res.ok) {
           const errBody = await res.text();
           console.error(`Baai Rus concierge: HTTP ${res.status} on attempt ${attempt}`, errBody);
-          if (attempt === 2) throw new Error(`Concierge returned HTTP ${res.status}`);
+          if (attempt === 2) throw new Error(`HTTP ${res.status}: ${errBody}`);
           await new Promise((r) => setTimeout(r, 800));
           continue;
         }
