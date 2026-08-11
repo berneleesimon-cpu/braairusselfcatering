@@ -34,6 +34,9 @@ Example of correct tone and register (match this, not textbook Afrikaans):
 
 If you are ever unsure whether a word is Dutch or Afrikaans, default to the simpler, more colloquial West Coast Afrikaans phrasing rather than a formal or Dutch-sounding one.
 
+FORMATTING — HARD CONSTRAINT:
+Never use markdown tables, pipe characters (|), or ** bold markers. This is a plain-text chat bubble on a small phone screen — markdown does not render and will show up as broken symbols. When listing multiple items (activities, amenities, etc.), use short plain lines or a simple dash list, one item per line, with no formatting symbols at all.
+
 UNITS:
 
 1. Die Strandhuis (The Beach House) — Family-friendly, main unit with full sea view.
@@ -115,7 +118,7 @@ exports.handler = async (event) => {
       body: JSON.stringify({
         model: GROQ_MODEL,
         messages,
-        temperature: 0.4,
+        temperature: 0.2,
         max_tokens: 500,
       }),
     });
@@ -131,6 +134,28 @@ exports.handler = async (event) => {
   }
 
   let reply = groqData?.choices?.[0]?.message?.content || "";
+
+  // --- Deterministic cleanup (do not rely on the model to self-police) ---
+
+  // 1. Dutch-ism → Afrikaans word swap. Add to this map as new drift words show up.
+  const DUTCH_TO_AFRIKAANS = [
+    [/\bwandelpaden\b/gi, "wandelpaaie"],
+    [/\bjij\b/gi, "jy"],
+    [/\bjouw\b/gi, "jou"],
+    [/\balsjeblieft\b/gi, "asseblief"],
+    [/\bkamerverwarming\b/gi, "kamerverhitting"],
+  ];
+  for (const [pattern, replacement] of DUTCH_TO_AFRIKAANS) {
+    reply = reply.replace(pattern, replacement);
+  }
+
+  // 2. Strip markdown the chat widget can't render: tables, pipes, bold markers.
+  reply = reply
+    .split("\n")
+    .filter((line) => !/^\s*\|?[\s:|-]+\|[\s:|-]*\|?\s*$/.test(line)) // drop table separator rows e.g. |---|---|
+    .join("\n");
+  reply = reply.replace(/\|/g, " ").replace(/\*\*/g, "");
+  reply = reply.replace(/[ \t]{2,}/g, " ").trim();
 
   // Extract ENQUIRY_JSON line if present, strip it from the guest-facing reply
   let enquiry = null;
@@ -182,3 +207,4 @@ exports.handler = async (event) => {
     body: JSON.stringify({ reply, enquirySent: !!enquiry }),
   };
 };
+       
