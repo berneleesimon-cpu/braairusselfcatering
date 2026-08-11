@@ -808,19 +808,51 @@
     const box = document.getElementById("brc-messages");
 
     try {
-      const res = await fetch(BRC_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message, history: brcHistory.slice(0, -1) }),
-      });
-      const data = await res.json();
+      const reply = await brcFetchWithRetry(message);
       box.removeChild(box.lastChild); // remove "..."
-      const reply = data.reply || "Jammer, iets het verkeerd geloop. Probeer weer. / Sorry, something went wrong. Please try again.";
       brcAddMessage("bot", reply);
       brcHistory.push({ role: "assistant", content: reply });
     } catch (err) {
+      console.error("Baai Rus concierge error:", err);
       box.removeChild(box.lastChild);
       brcAddMessage("bot", "Connection error — please try again in a moment.");
+    }
+  }
+
+  // Tries the concierge endpoint once, and if it fails (network error or
+  // non-OK response), waits briefly and tries exactly one more time before
+  // giving up. Most Groq hiccups are transient, so a single retry clears them.
+  async function brcFetchWithRetry(message) {
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const res = await fetch(BRC_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message, history: brcHistory.slice(0, -1) }),
+        });
+
+        if (!res.ok) {
+          const errBody = await res.text();
+          console.error(`Baai Rus concierge: HTTP ${res.status} on attempt ${attempt}`, errBody);
+          if (attempt === 2) throw new Error(`Concierge returned HTTP ${res.status}`);
+          await new Promise((r) => setTimeout(r, 800));
+          continue;
+        }
+
+        const data = await res.json();
+        if (!data.reply) {
+          console.error(`Baai Rus concierge: empty reply on attempt ${attempt}`, data);
+          if (attempt === 2) throw new Error("Concierge returned an empty reply");
+          await new Promise((r) => setTimeout(r, 800));
+          continue;
+        }
+
+        return data.reply;
+      } catch (err) {
+        if (attempt === 2) throw err;
+        console.error(`Baai Rus concierge: fetch failed on attempt ${attempt}`, err);
+        await new Promise((r) => setTimeout(r, 800));
+      }
     }
   }
 </script>
