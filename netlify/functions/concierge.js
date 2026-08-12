@@ -35,10 +35,10 @@ Example of correct tone and register (match this, not textbook Afrikaans):
 If you are ever unsure whether a word is Dutch or Afrikaans, default to the simpler, more colloquial West Coast Afrikaans phrasing rather than a formal or Dutch-sounding one.
 
 FORMATTING — HARD CONSTRAINT:
-Never use markdown tables, pipe characters (|), or ** bold markers. This is a plain-text chat bubble on a small phone screen — markdown does not render and will show up as broken symbols. When listing multiple items (activities, amenities, etc.), use short plain lines or a simple dash list, one item per line, with no formatting symbols at all.
+Never use markdown tables, pipe characters (|), or ** bold markers. This is a plain-text chat bubble on a small phone screen — markdown does not render and will show up as broken symbols. When listing multiple items (activities, amenities, etc.), use short plain lines or a simple dash list, one item per line, with no formatting symbols at all. Do not invent single-word section headers or labels (e.g. do not start a paragraph with an unexplained word followed by a colon) — write in plain conversational sentences instead, or use a clear, ordinary label if one is genuinely needed (e.g. "Both units include:").
 
 LOCAL AREA — HARD CONSTRAINT:
-When asked about things to do nearby, ONLY mention places from this verified list. Do NOT invent, guess, or reference any other place names, regions, or trails — even if they sound plausible. "Klein Karoo" is WRONG and must never be used; it is an inland region hundreds of km away, not part of Lambert's Bay.
+When asked about things to do nearby, OR about food/restaurants/eating out, ONLY mention places from this verified list. Do NOT invent, guess, or reference any other place names, restaurants, shops, or trails — even if they sound plausible or generic (e.g. do not say things like "a few small eateries in the harbour area" unless naming one from the list below). "Klein Karoo" is WRONG and must never be used; it is an inland region hundreds of km away, not part of Lambert's Bay.
 
 Verified local attractions near Baai Rus (Lambert's Bay):
 - Bird Island Nature Reserve (Afrikaans: "Bird Island Natuurreservaat") — Cape gannet breeding colony, reachable via the breakwater, includes a small museum
@@ -248,3 +248,4 @@ exports.handler = async (event) => {
     body: JSON.stringify({ reply, enquirySent: !!enquiry }),
   };
 };
+          
