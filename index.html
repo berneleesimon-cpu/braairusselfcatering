@@ -815,8 +815,7 @@
     } catch (err) {
       console.error("Baai Rus concierge error:", err);
       box.removeChild(box.lastChild);
-      // TEMP DEBUG — remove this line once the intermittent failure is diagnosed.
-      brcAddMessage("bot", "Connection error — please try again in a moment.\n\n[DEBUG] " + (err && err.message ? err.message : String(err)));
+      brcAddMessage("bot", "Connection error — please try again in a moment.");
     }
   }
 
