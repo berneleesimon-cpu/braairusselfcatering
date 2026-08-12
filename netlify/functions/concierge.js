@@ -1,4 +1,4 @@
-// netlify/functions/concierge.js
+netlify/functions/concierge.js
 //
 // Baai Rus AI Concierge
 // - Bilingual (Afrikaans / English, auto-detect)
@@ -108,32 +108,52 @@ exports.handler = async (event) => {
   ];
 
   let groqData;
-  try {
-    const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${groqApiKey}`,
-      },
-      body: JSON.stringify({
-        model: GROQ_MODEL,
-        messages,
-        temperature: 0.2,
-        max_tokens: 500,
-      }),
-    });
+  let reply = "";
 
-    if (!groqResponse.ok) {
-      const errText = await groqResponse.text();
-      return { statusCode: 502, body: JSON.stringify({ error: "Groq API error", detail: errText }) };
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${groqApiKey}`,
+        },
+        body: JSON.stringify({
+          model: GROQ_MODEL,
+          messages,
+          temperature: 0.2,
+          max_tokens: 500,
+        }),
+      });
+
+      if (!groqResponse.ok) {
+        const errText = await groqResponse.text();
+        if (attempt === 2) {
+          return { statusCode: 502, body: JSON.stringify({ error: "Groq API error", detail: errText }) };
+        }
+        continue; // retry once on a bad HTTP status
+      }
+
+      groqData = await groqResponse.json();
+      reply = groqData?.choices?.[0]?.message?.content || "";
+
+      if (reply.trim()) break; // got real content, stop retrying
+
+      // Empty content from Groq — log it (finish_reason helps diagnose why) and retry once
+      console.error(
+        `Groq returned empty content on attempt ${attempt}. finish_reason: ${groqData?.choices?.[0]?.finish_reason}`
+      );
+    } catch (err) {
+      if (attempt === 2) {
+        return { statusCode: 502, body: JSON.stringify({ error: "Failed to reach Groq API", detail: String(err) }) };
+      }
     }
-
-    groqData = await groqResponse.json();
-  } catch (err) {
-    return { statusCode: 502, body: JSON.stringify({ error: "Failed to reach Groq API", detail: String(err) }) };
   }
 
-  let reply = groqData?.choices?.[0]?.message?.content || "";
+  // Still empty after retrying — fall back to a safe, friendly message rather than nothing
+  if (!reply.trim()) {
+    reply = "Hi there! Sorry, could you rephrase that? I want to make sure I understand what you need.";
+  }
 
   // --- Deterministic cleanup (do not rely on the model to self-police) ---
 
@@ -207,4 +227,4 @@ exports.handler = async (event) => {
     body: JSON.stringify({ reply, enquirySent: !!enquiry }),
   };
 };
-       
+   
