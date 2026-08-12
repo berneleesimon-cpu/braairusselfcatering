@@ -1,4 +1,4 @@
-netlify/functions/concierge.js
+// netlify/functions/concierge.js
 //
 // Baai Rus AI Concierge
 // - Bilingual (Afrikaans / English, auto-detect)
