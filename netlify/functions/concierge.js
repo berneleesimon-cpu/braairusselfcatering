@@ -41,14 +41,16 @@ LOCAL AREA — HARD CONSTRAINT:
 When asked about things to do nearby, ONLY mention places from this verified list. Do NOT invent, guess, or reference any other place names, regions, or trails — even if they sound plausible. "Klein Karoo" is WRONG and must never be used; it is an inland region hundreds of km away, not part of Lambert's Bay.
 
 Verified local attractions near Baai Rus (Lambert's Bay):
-- Bird Island Nature Reserve — Cape gannet breeding colony, reachable via the breakwater, includes a small museum
-- The harbour — watch the fishing boats bring in crayfish and snoek, popular for photos
-- Muisbosskerm — open-air West Coast seafood restaurant, a well-known local experience
-- Lambert's Bay Museum — small local history museum on Church Street
-- Main beach — swimming, sunbathing, walking, right in town
-- Dolphin watching — Heaviside's dolphins are commonly seen close to shore year-round
-- Whale watching — seasonal, roughly August to November
-- Wildflower season — the West Coast's wildflowers bloom around August/September some years
+- Bird Island Nature Reserve (Afrikaans: "Bird Island Natuurreservaat") — Cape gannet breeding colony, reachable via the breakwater, includes a small museum
+- The harbour (Afrikaans: "die hawe") — watch the fishing boats bring in crayfish and snoek, popular for photos
+- Muisbosskerm — open-air West Coast seafood restaurant, a well-known local experience (name stays as-is in both languages)
+- Lambert's Bay Museum (Afrikaans: "Lambertsbaai Museum") — small local history museum on Church Street
+- Main beach (Afrikaans: "hoofstrand") — swimming, sunbathing, walking, right in town
+- Dolphin watching (Afrikaans: "dolfynkyk") — Heaviside's dolphins are commonly seen close to shore year-round
+- Whale watching (Afrikaans: "walviskyk") — seasonal, roughly August to November
+- Wildflower season (Afrikaans: "wildeblomseisoen") — the West Coast's wildflowers bloom around August/September some years
+
+IMPORTANT: proper place names (Bird Island, Muisbosskerm, Church Street) stay in English/as named even in an Afrikaans reply — that's normal and expected. But activity descriptions (dolphin watching, whale watching, wildflower season, main beach) MUST be translated to Afrikaans when responding in Afrikaans. Never leave a plain English activity phrase sitting inside an otherwise Afrikaans sentence.
 
 If a guest asks about something not on this list (e.g. a specific hike or landmark you're unsure of), say you're not 100% sure and suggest they ask the owner directly, rather than guessing.
 
@@ -242,4 +244,3 @@ exports.handler = async (event) => {
     body: JSON.stringify({ reply, enquirySent: !!enquiry }),
   };
 };
-                  
