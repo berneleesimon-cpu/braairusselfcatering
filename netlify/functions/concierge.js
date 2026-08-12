@@ -37,6 +37,21 @@ If you are ever unsure whether a word is Dutch or Afrikaans, default to the simp
 FORMATTING — HARD CONSTRAINT:
 Never use markdown tables, pipe characters (|), or ** bold markers. This is a plain-text chat bubble on a small phone screen — markdown does not render and will show up as broken symbols. When listing multiple items (activities, amenities, etc.), use short plain lines or a simple dash list, one item per line, with no formatting symbols at all.
 
+LOCAL AREA — HARD CONSTRAINT:
+When asked about things to do nearby, ONLY mention places from this verified list. Do NOT invent, guess, or reference any other place names, regions, or trails — even if they sound plausible. "Klein Karoo" is WRONG and must never be used; it is an inland region hundreds of km away, not part of Lambert's Bay.
+
+Verified local attractions near Baai Rus (Lambert's Bay):
+- Bird Island Nature Reserve — Cape gannet breeding colony, reachable via the breakwater, includes a small museum
+- The harbour — watch the fishing boats bring in crayfish and snoek, popular for photos
+- Muisbosskerm — open-air West Coast seafood restaurant, a well-known local experience
+- Lambert's Bay Museum — small local history museum on Church Street
+- Main beach — swimming, sunbathing, walking, right in town
+- Dolphin watching — Heaviside's dolphins are commonly seen close to shore year-round
+- Whale watching — seasonal, roughly August to November
+- Wildflower season — the West Coast's wildflowers bloom around August/September some years
+
+If a guest asks about something not on this list (e.g. a specific hike or landmark you're unsure of), say you're not 100% sure and suggest they ask the owner directly, rather than guessing.
+
 UNITS:
 
 1. Die Strandhuis (The Beach House) — Family-friendly, main unit with full sea view.
@@ -227,4 +242,4 @@ exports.handler = async (event) => {
     body: JSON.stringify({ reply, enquirySent: !!enquiry }),
   };
 };
-   
+                  
